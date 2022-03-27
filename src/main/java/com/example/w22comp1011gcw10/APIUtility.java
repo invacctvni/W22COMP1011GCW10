@@ -47,7 +47,7 @@ public class APIUtility {
      */
     public static ApiResponse getMoviesFromOMDB(String searchTerm)
     {
-        searchTerm = searchTerm.replace("", "%20");
+        searchTerm = searchTerm.replace(" ", "%20");
 
         String uri = "https://www.omdbapi.com/?apikey=e3d02f7f&s=" +searchTerm;
 
@@ -67,4 +67,37 @@ public class APIUtility {
         return getMoviesFromJSONFile("javaApiFetched.json");
 
     }
+
+    /**
+     * This method will call the API and return the java objects without creating
+     * a JSON file on the hard drive.
+     */
+    public static ApiResponse getMoviesFromOMDBQuick(String searchTerm) {
+
+        searchTerm = searchTerm.replace(" ", "%20");
+
+        String uri = "https://www.omdbapi.com/?apikey=e3d02f7f&s=" +searchTerm;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(uri)).build();
+
+//        this will call the API and
+//        write the result to the file "javaApiFetched.json"
+        try {
+            HttpResponse<String> response = client.send(httpRequest, HttpResponse
+                    .BodyHandlers
+                    .ofString());
+
+            Gson gson = new Gson();
+            return gson.fromJson(response.body(),ApiResponse.class);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    //if nothing returned from json, return null.
+        return null;
+    }
+
+
 }
