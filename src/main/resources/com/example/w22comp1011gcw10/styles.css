@@ -2,3 +2,17 @@
     -fx-background-color: linear-gradient(from 300px 300px to 500px 500px, #303f9f,#5c6bc0);
     -fx-font-size: 18px;
 }
+
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.button {
+    -fx-background-radius: 20px;
+}
+
+
+#header {
+
+    -fx-font-size: 30pt;
+}
